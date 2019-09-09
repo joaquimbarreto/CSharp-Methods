@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Methods
@@ -53,14 +54,11 @@ namespace Methods
                 }
                 else if (division.IsChecked.HasValue && division.IsChecked.Value)
                 {
-                    calculatedValue = divideValues(leftHandSide, rightHandSide);
-                    showResult(calculatedValue);
+                    int division, remainder;
+                    (division, remainder) = divide(leftHandSide, rightHandSide);
+                    result.Text = $"{division} remainder {remainder}";
                 }
-                else if (remainder.IsChecked.HasValue && remainder.IsChecked.Value)
-                {
-                    calculatedValue = remainderValues(leftHandSide, rightHandSide);
-                    showResult(calculatedValue);
-                }
+                
             }
             catch (Exception caught)
             {
@@ -87,16 +85,12 @@ namespace Methods
             return leftHandSide * rightHandSide;
         }
 
-        private int divideValues(int leftHandSide, int rightHandSide)
+        private (int, int) divide(int leftHandSide, int rightHandSide)
         {
             expression.Text = $"{leftHandSide} / {rightHandSide}";
-            return leftHandSide / rightHandSide;
-        }
-
-        private int remainderValues(int leftHandSide, int rightHandSide)
-        {
-            expression.Text = $"{leftHandSide} % {rightHandSide}";
-            return leftHandSide % rightHandSide;
+            int division = leftHandSide / rightHandSide;
+            int remainder = leftHandSide % rightHandSide;
+            return (division, remainder);
         }
 
         private void showResult(int answer) => result.Text = answer.ToString();
